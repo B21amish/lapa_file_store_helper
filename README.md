@@ -22,6 +22,10 @@ helper to access the file store layer for my personal server.
 
 ## changelog
 
+### v0.0.2
+
+- Configuration is now being read with the help of lapa_commons.
+
 ### v0.0.1
 
 - initial implementation.
