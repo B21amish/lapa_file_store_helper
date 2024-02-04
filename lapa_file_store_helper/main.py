@@ -32,7 +32,7 @@ class LAPAFileStoreHelper:
             endpoint = "upload_file"
             payload = {
                 "file_purpose": file_purpose,
-                "system_relative_path": system_relative_path,
+                "system_relative_pat": system_relative_path,
             }
             with open(file_path, "rb") as file:
                 files = {"file": (file_path, file, "multipart/form-data")}
@@ -40,9 +40,11 @@ class LAPAFileStoreHelper:
                     self.global_str_lapa_file_store_url_base + "/" + endpoint,
                     files=files,
                     data=payload,
-                ).json()
-            return response
-
+                )
+                if response.status_code == 200:
+                    return response.json()
+                else:
+                    response.raise_for_status()
         except Exception:
             raise
 
@@ -64,9 +66,12 @@ class LAPAFileStoreHelper:
                 self.global_str_lapa_file_store_url_base + "/" + endpoint,
                 files=files,
                 data=payload,
-            ).json()
+            )
 
-            return response
+            if response.status_code == 200:
+                return response.json()
+            else:
+                response.raise_for_status()
 
         except Exception:
             raise
@@ -87,26 +92,28 @@ class LAPAFileStoreHelper:
                 self.global_str_lapa_file_store_url_base + "/" + endpoint,
                 params=payload,
             )
-            if not os.path.exists(output_folder_path):
-                os.mkdir(output_folder_path)
+            if response.status_code == 200:
+                if not os.path.exists(output_folder_path):
+                    os.mkdir(output_folder_path)
 
-            headers = parse_it(response)
-            if headers.content_disposition.has("filename*"):
-                file_name = urllib.parse.unquote(
-                    headers.content_disposition["filename*"][7:]
-                )
-            elif headers.content_disposition.has("filename"):
-                file_name = headers.content_disposition["filename"]
+                headers = parse_it(response)
+                if headers.content_disposition.has("filename*"):
+                    file_name = urllib.parse.unquote(
+                        headers.content_disposition["filename*"][7:]
+                    )
+                elif headers.content_disposition.has("filename"):
+                    file_name = headers.content_disposition["filename"]
+                else:
+                    raise Exception(
+                        f"unable to download file - not able to get file name. headers: {headers}",
+                    )
+
+                downloaded_file_path = output_folder_path + os.sep + file_name
+                with open(downloaded_file_path, "wb") as file:
+                    file.write(response.content)
+
+                return downloaded_file_path
             else:
-                raise Exception(
-                    f"unable to download file - not able to get file name. headers: {headers}",
-                )
-
-            downloaded_file_path = output_folder_path + os.sep + file_name
-            with open(downloaded_file_path, "wb") as file:
-                file.write(response.content)
-
-            return downloaded_file_path
-
+                response.raise_for_status()
         except Exception:
             raise
