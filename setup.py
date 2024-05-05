@@ -4,7 +4,7 @@ package_name = "lapa_file_store_helper"
 
 setup(
     name=package_name,
-    version="0.0.3",
+    version="0.0.4",
     packages=find_packages(),
     package_data={
         package_name: ["data/*"],
@@ -14,8 +14,8 @@ setup(
         "kiss_headers>=2.4.3",
         "lapa_commons>=0.0.1"
     ],
-    author="thePmSquare, Lav Sharma",
-    author_email="thepmsquare@gmail.com, lavsharma2016@gmail.com",
+    author="thePmSquare, Lav Sharma, Amish Palkar",
+    author_email="thepmsquare@gmail.com, lavsharma2016@gmail.com, amishpalkar302001@gmail.com",
     description="helper to access the file store layer for my personal server.",
     long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",

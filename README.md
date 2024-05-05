@@ -22,6 +22,10 @@ helper to access the file store layer for my personal server.
 
 ## changelog
 
+### v0.0.4
+
+- Added helper function for /delete_file api call.
+
 ### v0.0.3
 
 - Status code check and error raise.

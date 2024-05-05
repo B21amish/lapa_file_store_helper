@@ -23,10 +23,10 @@ class LAPAFileStoreHelper:
             raise
 
     def upload_file_using_file_path(
-        self,
-        file_path: str,
-        file_purpose: str | None = None,
-        system_relative_path: str = "others/misc",
+            self,
+            file_path: str,
+            file_purpose: str | None = None,
+            system_relative_path: str = "others/misc",
     ):
         try:
             endpoint = "upload_file"
@@ -49,10 +49,10 @@ class LAPAFileStoreHelper:
             raise
 
     def upload_file_using_binary_io(
-        self,
-        file: BinaryIO,
-        file_purpose: str | None = None,
-        system_relative_path: str = "others/misc",
+            self,
+            file: BinaryIO,
+            file_purpose: str | None = None,
+            system_relative_path: str = "others/misc",
     ):
         try:
             endpoint = "upload_file"
@@ -113,6 +113,28 @@ class LAPAFileStoreHelper:
                     file.write(response.content)
 
                 return downloaded_file_path
+            else:
+                response.raise_for_status()
+        except Exception:
+            raise
+
+    def delete_file(self, list_file_storage_token: list) -> str:
+        """
+        :param list_file_storage_token:
+        :return: filepath
+        """
+        try:
+            endpoint = "delete_file"
+            payload = {
+                "list_file_storage_token": list_file_storage_token,
+            }
+
+            response = requests.delete(
+                self.global_str_lapa_file_store_url_base + "/" + endpoint,
+                params=payload,
+            )
+            if response.status_code == 200:
+                return response.json()
             else:
                 response.raise_for_status()
         except Exception:

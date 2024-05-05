@@ -32,3 +32,13 @@ download_file_output = lapa_file_store_helper.download_file(
     output_folder_path=output_folder_path,
 )
 print(download_file_output)
+
+# Example: Delete file
+list_file_storage_token = list()
+list_file_storage_token.append(upload_file_using_io_output["additional_info"][
+                                   "FileStorageToken"
+                               ])
+delete_file_output = lapa_file_store_helper.delete_file(
+    list_file_storage_token=list_file_storage_token
+)
+print(delete_file_output)
