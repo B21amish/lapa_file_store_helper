@@ -5,28 +5,27 @@ from typing import BinaryIO
 import requests
 from kiss_headers import parse_it
 
-from lapa_file_store_helper.configuration import (
-    config_int_lapa_file_store_port,
-    config_str_lapa_file_store_ip,
-    config_str_lapa_file_store_protocol,
-)
-
 
 class LAPAFileStoreHelper:
-    def __init__(self):
+    def __init__(
+        self,
+        param_str_lapa_file_store_protocol: str = "http",
+        param_str_lapa_file_store_ip: str = "localhost",
+        param_int_lapa_file_store_port: int = 10100,
+    ):
         try:
             self.global_str_lapa_file_store_url_base = (
-                f"{config_str_lapa_file_store_protocol}://"
-                f"{config_str_lapa_file_store_ip}:{config_int_lapa_file_store_port}"
+                f"{param_str_lapa_file_store_protocol}://"
+                f"{param_str_lapa_file_store_ip}:{param_int_lapa_file_store_port}"
             )
         except Exception:
             raise
 
     def upload_file_using_file_path(
-            self,
-            file_path: str,
-            file_purpose: str | None = None,
-            system_relative_path: str = "others/misc",
+        self,
+        file_path: str,
+        file_purpose: str | None = None,
+        system_relative_path: str = "others/misc",
     ):
         try:
             endpoint = "upload_file"
@@ -49,10 +48,10 @@ class LAPAFileStoreHelper:
             raise
 
     def upload_file_using_binary_io(
-            self,
-            file: BinaryIO,
-            file_purpose: str | None = None,
-            system_relative_path: str = "others/misc",
+        self,
+        file: BinaryIO,
+        file_purpose: str | None = None,
+        system_relative_path: str = "others/misc",
     ):
         try:
             endpoint = "upload_file"
