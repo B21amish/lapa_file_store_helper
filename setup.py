@@ -6,7 +6,7 @@ setup(
     name=package_name,
     version="0.0.5",
     packages=find_packages(),
-    install_requires=["requests>=2.31.0", "kiss_headers>=2.4.3", "lapa_commons>=0.0.1"],
+    install_requires=["requests>=2.31.0", "kiss_headers>=2.4.3"],
     author="thePmSquare, Lav Sharma, Amish Palkar",
     author_email="thepmsquare@gmail.com, lavsharma2016@gmail.com, amishpalkar302001@gmail.com",
     description="helper to access the file store layer for my personal server.",
