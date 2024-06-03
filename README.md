@@ -12,15 +12,15 @@ helper to access the file store layer for my personal server.
 
 [reference python file](./example/example.py)
 
-## configs
-
-1. lapa_file_store_helper\data\config.ini
-
 ## env
 
 - python>=3.12.0
 
 ## changelog
+
+### v0.0.5
+
+- remove config and reconfigure variables to be as class parameters.
 
 ### v0.0.4
 
